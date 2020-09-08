@@ -3,12 +3,11 @@ pipeline {
   stages {
 			stage ('Checkout')
 			{
-			steps 
-			{
-				checkout scm
+				steps 
+				{
+					checkout scm
+				}
 			}
-		}
-  stages {
 			stage ('Build')
 			{
 				steps 
@@ -16,8 +15,7 @@ pipeline {
 					bat "\"${MSBUILD}\"dotnetframework48-cicd-demo.sln /p:Configuration=Release /p:PlatformTarget=Any CPU" 
 				}
 			}
-			
-			
+	
 
 		}
 	}
