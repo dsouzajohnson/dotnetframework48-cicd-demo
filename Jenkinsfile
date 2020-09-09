@@ -3,13 +3,11 @@ pipeline {
   stages {
 			
 	  
-	  stage ('Checkout')
-			{
-				steps 
-				{
-					checkout scm
-				}
-			}
+	stage('Clean Workspace'){
+      steps {
+        cleanWs()
+      }
+    }
 			stage ('Build')
 			{
 				steps { 
