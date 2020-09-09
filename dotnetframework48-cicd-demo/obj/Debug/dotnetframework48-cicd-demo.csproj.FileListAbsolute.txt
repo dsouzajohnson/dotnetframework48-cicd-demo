@@ -67,8 +67,6 @@ C:\Data\repos\githubdsouzajohnson\dotnetframework48-cicd-demo\dotnetframework48-
 C:\Data\repos\githubdsouzajohnson\dotnetframework48-cicd-demo\dotnetframework48-cicd-demo\bin\Antlr3.Runtime.pdb
 C:\Data\repos\githubdsouzajohnson\dotnetframework48-cicd-demo\dotnetframework48-cicd-demo\bin\Microsoft.AspNet.FriendlyUrls.xml
 C:\Data\repos\githubdsouzajohnson\dotnetframework48-cicd-demo\dotnetframework48-cicd-demo\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Data\repos\githubdsouzajohnson\dotnetframework48-cicd-demo\dotnetframework48-cicd-demo\obj\Debug\dotnetframework48-cicd-demo.csprojAssemblyReference.cache
-C:\Data\repos\githubdsouzajohnson\dotnetframework48-cicd-demo\dotnetframework48-cicd-demo\obj\Debug\dotnetframework48-cicd-demo.csproj.CoreCompileInputs.cache
-C:\Data\repos\githubdsouzajohnson\dotnetframework48-cicd-demo\dotnetframework48-cicd-demo\obj\Debug\dotnetframework48-cicd-demo.csproj.CopyComplete
 C:\Data\repos\githubdsouzajohnson\dotnetframework48-cicd-demo\dotnetframework48-cicd-demo\obj\Debug\dotnetframework48-cicd-demo.dll
 C:\Data\repos\githubdsouzajohnson\dotnetframework48-cicd-demo\dotnetframework48-cicd-demo\obj\Debug\dotnetframework48-cicd-demo.pdb
+C:\Data\repos\githubdsouzajohnson\dotnetframework48-cicd-demo\dotnetframework48-cicd-demo\obj\Debug\dotnetframework48-cicd-demo.csprojResolveAssemblyReference.cache
