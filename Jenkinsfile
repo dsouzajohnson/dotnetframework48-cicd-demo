@@ -1,15 +1,15 @@
 pipeline {
     agent any
   stages {
-			stage('Clean Workspace')
+			
+	  stage('Clean Workspace')
 			{
 				steps 
 				{
 					cleanWs()
 				}
 			}
-			
-			stage ('Checkout')
+	  stage ('Checkout')
 			{
 				steps 
 				{
@@ -18,9 +18,13 @@ pipeline {
 			}
 			stage ('Build')
 			{
-				steps 
-				{
-					bat "\"${MSBUILD}\"dotnetframework48-cicd-demo.sln /p:Configuration=Release /p:PlatformTarget=Any CPU" 
+				steps { 
+				
+					script {
+					  //def msbuild = tool name: 'msbuild_2017', type: 'hudson.plugins.msbuild.MsBuildInstallation'
+					  tool name: 'msbuild_2019', type: 'msbuild'
+					  bat "\"${tool 'msbuild_2019'}\"\\msbuild.exe dotnetframework48-cicd-demo.sln /P:DeployOnBuild=True /p:AllowUntrustedCertificate=True /p:MSDeployServiceUrl=<IP or Hostname of IIS server> /P:DeployIISAppPath=\"Default Web Site/PrimeDotnet\""
+					}
 				}
 			}
 	
