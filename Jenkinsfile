@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+   environment {
+registry = "dsouzajohnson/dotnetframework48"
+registryCredential = 'dsouzajohnson'
+dockerImage = 'microsoft-dotnet-framework'
+}
+agent any
   stages {
 			
 	  
@@ -21,6 +26,13 @@ pipeline {
 					}
 				}
 			}
+			stage('Building our image') {
+				steps{
+				script {
+				dockerImage = docker.build registry + ":$BUILD_NUMBER"
+				}
+}
+}
 	
 
 		}
