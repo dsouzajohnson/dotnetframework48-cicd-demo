@@ -9,7 +9,7 @@ ADD "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" "C:\windows\nu
 # Download the Build Tools bootstrapper.
 #ADD https://aka.ms/vs/16/release/vs_buildtools.exe C:\\TEMP\\vs_buildtools.exe
 
-ADD "https://download.microsoft.com/download/9/B/B/9BB1309E-1A8F-4A47-A6C5-ECF76672A3B3/BuildTools_Full.exe" "$env:TEMP\BuildTools_Full.exe"
+ADD "https://download.microsoft.com/download/9/B/B/9BB1309E-1A8F-4A47-A6C5-ECF76672A3B3/BuildTools_Full.exe" "C:\TEMP\BuildTools_Full.exe"
 
 # Install Build Tools with the Microsoft.VisualStudio.Workload.AzureBuildTools workload, excluding workloads and components with known issues.
 ##RUN C:\\TEMP\\vs_buildtools.exe 
