@@ -1,23 +1,15 @@
-FROM mcr.microsoft.com/dotnet/framework/sdk:4.8 AS build
+FROM mcr.microsoft.com/dotnet/framework/sdk:4.8
 
-SHELL ["powershell"]
+SHELL ["cmd", "/S", "/C"]
 
-# Note: Get MSBuild 12.
-RUN Invoke-WebRequest "https://download.microsoft.com/download/9/B/B/9BB1309E-1A8F-4A47-A6C5-ECF76672A3B3/BuildTools_Full.exe" -OutFile "$env:TEMP\BuildTools_Full.exe" -UseBasicParsing
-RUN &  "$env:TEMP\BuildTools_Full.exe" /Silent /Full
-# Todo: delete the BuildTools_Full.exe file in this layer
+ADD https://aka.ms/vs/16/release/vs_buildtools.exe C:\Temp\vs_buildtools.exe
+ADD https://aka.ms/vs/16/release/channel C:\Temp\VisualStudio.chman
+RUN C:\Temp\vs_buildtools.exe `
+    --quiet --wait --norestart --nocache `
+    --installPath C:\BuildTools `
+    --channelUri C:\Temp\VisualStudio.chman `
+    --installChannelUri C:\Temp\VisualStudio.chman `
+    --add Microsoft.VisualStudio.Workload.VCTools;includeRecommended `
+    --add Microsoft.Component.MSBuild `
+ || IF "%ERRORLEVEL%"=="3010" EXIT 0
 
-# Note: Add .NET + ASP.NET
-#RUN Install-WindowsFeature NET-Framework-45-ASPNET ; \
- #   Install-WindowsFeature Web-Asp-Net45
-
-# Note: Add NuGet
-RUN Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile "C:\windows\nuget.exe" -UseBasicParsing
-WORKDIR "C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0"
-
-# Note: Install Web Targets
-RUN &  "C:\windows\nuget.exe" Install MSBuild.Microsoft.VisualStudio.Web.targets -Version 12.0.4
-RUN mv 'C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\MSBuild.Microsoft.VisualStudio.Web.targets.12.0.4\tools\VSToolsPath\*' 'C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\'
-# Note: Add Msbuild to path
-RUN setx PATH '%PATH%;C:\\Program Files (x86)\\MSBuild\\12.0\\Bin\\msbuild.exe'
-CMD ["C:\\Program Files (x86)\\MSBuild\\12.0\\Bin\\msbuild.exe"]
