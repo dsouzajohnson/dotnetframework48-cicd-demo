@@ -18,7 +18,7 @@ pipeline
 				checkout scm
 			}
 		}
-
+	//some comments added
 		stage('Building our image') 
 		{
 			steps
