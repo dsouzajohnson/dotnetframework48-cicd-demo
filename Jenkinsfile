@@ -1,36 +1,43 @@
 pipeline {
    environment {
 registry = "dsouzajohnson/dotnetframework48"
-registryCredential = 'dsouzajohnson'
-dockerImage = 'microsoft-dotnet-framework'
+registryCredential =  'dockerhub_id'
+dockerImage = 'mcr.microsoft.com/dotnet/framework/aspnet:4.8'
 }
 agent any
   stages {
 			
-	  
-	  stage ('Checkout')
-			{
-				steps 
+		stage ('Checkout')
 				{
-					checkout scm
-				}
-			}
-			stage ('Build')
-			{
-				steps { 
-				
-					script {
-					  //def msbuild = tool name: 'msbuild_2017', type: 'hudson.plugins.msbuild.MsBuildInstallation'
-					  tool name: 'msbuild_2019', type: 'msbuild'
-					  bat "\"${tool 'msbuild_2019'}\" dotnetframework48-cicd-demo.sln"
+					steps 
+					{
+						checkout scm
 					}
 				}
-			}
-			stage('Building our image') {
-				steps{
-				script {
+
+		stage('Building our image') 
+		{
+		steps{
+			script {
 				dockerImage = docker.build registry + ":$BUILD_NUMBER"
 				}
+			}
+		}
+		stage('Deploy our image') {
+			steps{
+			script {
+			docker.withRegistry( '', registryCredential ) {
+			dockerImage.push()
+				}
+				}
+				}
+			}
+			stage('Cleaning up') {
+steps{
+sh "docker rmi $registry:$BUILD_NUMBER"
+}
+}
+		
 }
 }
 	
