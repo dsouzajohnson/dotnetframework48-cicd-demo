@@ -1,22 +1,13 @@
 FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8-windowsservercore-ltsc2019
 
-# Restore the default Windows shell for correct batch processing.
-SHELL ["cmd", "/S", "/C"]
+# Metadata indicating an image maintainer.
+LABEL maintainer="johnson.dsouza@atos.net"
 
+# Uses dism.exe to install the IIS role.
+RUN dism.exe /online /enable-feature /all /featurename:iis-webserver /NoRestart
 
-WORKDIR /app
+# Creates an HTML file and adds content to this file.
+RUN echo "Hello World - Dockerfile" > c:\inetpub\wwwroot\index.html
 
-# copy csproj and restore as distinct layers
-COPY *.sln .
-COPY dotnetframework48-cicd-demo/*.csproj ./dotnetframework48-cicd-demo/
-COPY dotnetframework48-cicd-demo/*.config ./dotnetframework48-cicd-demo/
-
-# copy everything else and build app
-COPY dotnetframework48-cicd-demo/. ./dotnetframework48-cicd-demo/
-WORKDIR /app/dotnetframework48-cicd-demo
-RUN msbuild /p:Configuration=Release
-
-
-FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8 AS runtime
-WORKDIR /inetpub/wwwroot
-COPY --from=build /app/dotnetframework48-cicd-demo/. ./
+# Sets a command or process that will run each time a container is run from the new image.
+CMD [ "cmd" ]
