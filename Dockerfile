@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8-windowsservercore-ltsc2019
 
 # Set up environment to collect install errors.
-COPY Install.cmd C:\TEMP\
+COPY "Install.cmd" "C:\TEMP\\"
 ADD https://aka.ms/vscollect.exe C:\TEMP\collect.exe
 
 #Download and install Build Tools for Visual Studio 2017.
