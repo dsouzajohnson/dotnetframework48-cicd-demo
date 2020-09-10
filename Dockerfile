@@ -1,9 +1,19 @@
-FROM mcr.microsoft.com/dotnet/framework/sdk:4.8
+FROM mcr.microsoft.com/dotnet/framework/sdk:4.8 AS build
+WORKDIR /app
 
-SHELL ["cmd", "/S", "/C"]
+# copy csproj and restore as distinct layers
+COPY *.sln .
+COPY dotnetframework48-cicd-demo/*.csproj ./dotnetframework48-cicd-demo/
+COPY dotnetframework48-cicd-demo/*.config ./dotnetframework48-cicd-demo/
+RUN nuget restore
 
-# Install Build Tools excluding workloads and components with known issues.
-ADD https://aka.ms/vs/15/release/vs_buildtools.exe C:\\TEMP\\vs_buildtools.exe
-RUN C:\\TEMP\\vs_buildtools.exe --quiet --wait --norestart --nocache --installPath C:\BuildTools --all --remove Microsoft.VisualStudio.Component.Windows10SDK.10240 --remove Microsoft.VisualStudio.Component.Windows10SDK.10586 --remove Microsoft.VisualStudio.Component.Windows10SDK.14393 --remove Microsoft.VisualStudio.Component.Windows81SDK `
-RUN DEL C:\\TEMP\\vs_buildtools.exe
+# copy everything else and build app
+COPY aspnetapp/. ./aspnetapp/
+WORKDIR /app/aspnetapp
+RUN msbuild /p:Configuration=Release
+
+
+FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8 AS runtime
+WORKDIR /inetpub/wwwroot
+COPY --from=build /app/aspnetapp/. ./
 
