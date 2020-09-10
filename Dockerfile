@@ -9,13 +9,12 @@ ADD https://aka.ms/vs/15/release/vs_buildtools.exe C:\TEMP\vs_buildtools.exe
 RUN C:\TEMP\Install.cmd C:\TEMP\vs_buildtools.exe --quiet --wait --norestart --nocache `
 
     
-    SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
     
     
-    # Install WebDeploy and NuGet with Chocolatey
-RUN Install-PackageProvider -Name chocolatey -RequiredVersion 2.8.5.130 -Force; `
-    Install-Package -Name nodejs.install -RequiredVersion 11.6.0 -Force; `
-    Install-Package -Name webdeploy -RequiredVersion 3.6.0 -Force; `
-    Install-Package nuget.commandline -RequiredVersion 4.9.2 -Force; 
+# Install WebDeploy and NuGet with Chocolatey
+RUN Install-PackageProvider -Name chocolatey -RequiredVersion 2.8.5.130 -Force; 
+RUN   Install-Package -Name webdeploy -RequiredVersion 3.6.0 -Force; 
+RUN    Install-Package nuget.commandline -RequiredVersion 4.9.2 -Force; 
     
     
