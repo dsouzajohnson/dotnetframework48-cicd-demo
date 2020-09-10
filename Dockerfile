@@ -1,7 +1,4 @@
-FROM microsoft/windowsservercore:10.0.14393.206
-MAINTAINER alexellis2@gmail.com
-
-# docker push alexellisio/msbuild:12.0
+FROM mcr.microsoft.com/dotnet/framework/sdk:4.8 AS build
 
 SHELL ["powershell"]
 
@@ -11,8 +8,8 @@ RUN &  "$env:TEMP\BuildTools_Full.exe" /Silent /Full
 # Todo: delete the BuildTools_Full.exe file in this layer
 
 # Note: Add .NET + ASP.NET
-RUN Install-WindowsFeature NET-Framework-45-ASPNET ; \
-    Install-WindowsFeature Web-Asp-Net45
+#RUN Install-WindowsFeature NET-Framework-45-ASPNET ; \
+ #   Install-WindowsFeature Web-Asp-Net45
 
 # Note: Add NuGet
 RUN Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile "C:\windows\nuget.exe" -UseBasicParsing
