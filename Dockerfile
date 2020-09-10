@@ -1,6 +1,9 @@
 FROM mcr.microsoft.com/dotnet/framework/sdk:4.8 AS build
 WORKDIR /app
 
+# Restore the default Windows shell for correct batch processing.
+SHELL ["cmd", "/S", "/C"]
+
 # copy csproj and restore as distinct layers
 COPY *.sln .
 COPY dotnetframework48-cicd-demo/*.csproj ./dotnetframework48-cicd-demo/
