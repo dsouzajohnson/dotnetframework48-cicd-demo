@@ -10,6 +10,7 @@ pipeline
 	agent any
 	stages 
 	{
+		//some comments
 		stage ('Checkout')
 		{
 			steps 
