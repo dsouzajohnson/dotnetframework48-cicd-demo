@@ -9,7 +9,7 @@ ADD https://aka.ms/vs/16/release/vs_buildtools.exe C:\\TEMP\\vs_buildtools.exe
 
 
 # Install Build Tools with the Microsoft.VisualStudio.Workload.AzureBuildTools workload, excluding workloads and components with known issues.
-RUN C:\\TEMP\\vs_buildtools.exe 
+#RUN C:\\TEMP\\vs_buildtools.exe 
 
 # Define the entry point for the docker container.
 # This entry point starts the developer command prompt and launches the PowerShell shell.
