@@ -5,7 +5,7 @@ WORKDIR /app
 COPY *.sln .
 COPY dotnetframework48-cicd-demo/*.csproj ./dotnetframework48-cicd-demo/
 COPY dotnetframework48-cicd-demo/*.config ./dotnetframework48-cicd-demo/
-RUN nuget restore
+#RUN nuget restore
 
 # copy everything else and build app
 COPY dotnetframework48-cicd-demo/. ./dotnetframework48-cicd-demo/
