@@ -4,7 +4,7 @@ FROM mcr.microsoft.com/dotnet/framework/sdk:4.8 AS build
 # Restore the default Windows shell for correct batch processing.
 SHELL ["cmd", "/S", "/C"]
 
-ADD "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile "C:\windows\nuget.exe"
+ADD "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" "C:\windows\nuget.exe"
 
 # Download the Build Tools bootstrapper.
 #ADD https://aka.ms/vs/16/release/vs_buildtools.exe C:\\TEMP\\vs_buildtools.exe
