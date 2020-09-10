@@ -1,19 +1,5 @@
 FROM mcr.microsoft.com/dotnet/framework/sdk:4.8 AS build
 
-SHELL ["powershell"]
-RUN Invoke-WebRequest "https://download.microsoft.com/download/9/B/B/9BB1309E-1A8F-4A47-A6C5-ECF76672A3B3/BuildTools_Full.exe" -OutFile "$env:TEMP\net.exe" -UseBasicParsing
-RUN &  "$env:TEMP\net.exe" /Silent /Full
-
-RUN Install-WindowsFeature NET-Framework-45-ASPNET ; \
-    Install-WindowsFeature Web-Asp-Net45
-    
-RUN Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile "C:\windows\nuget.exe" -UseBasicParsing
-WORKDIR "C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0"
-RUN &  "C:\windows\nuget.exe" Install MSBuild.Microsoft.VisualStudio.Web.targets -Version 12.0.4
-RUN mv 'C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\MSBuild.Microsoft.VisualStudio.Web.targets.12.0.4\tools\VSToolsPath\*' 'C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\'
-
-CMD ["C:\\Program Files (x86)\\MSBuild\\12.0\\Bin\\msbuild.exe"] 
-
 # Restore the default Windows shell for correct batch processing.
 SHELL ["cmd", "/S", "/C"]
 
@@ -22,12 +8,12 @@ ADD "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" "C:\windows\nu
 # Download the Build Tools bootstrapper.
 #ADD https://aka.ms/vs/16/release/vs_buildtools.exe C:\\TEMP\\vs_buildtools.exe
 
-#ADD "https://download.microsoft.com/download/9/B/B/9BB1309E-1A8F-4A47-A6C5-ECF76672A3B3/BuildTools_Full.exe" "C:\TEMP\BuildTools_Full.exe"
+ADD "https://download.microsoft.com/download/9/B/B/9BB1309E-1A8F-4A47-A6C5-ECF76672A3B3/BuildTools_Full.exe" "C:\TEMP\BuildTools_Full.exe"
 
 # Install Build Tools with the Microsoft.VisualStudio.Workload.AzureBuildTools workload, excluding workloads and components with known issues.
 ##RUN C:\\TEMP\\vs_buildtools.exe 
 
-#RUN C:\\TEMP\\BuildTools_Full.exe --quiet --wait --norestart --nocache 
+RUN C:\\TEMP\\BuildTools_Full.exe  /Silent /Full
 
 # Define the entry point for the docker container.
 # This entry point starts the developer command prompt and launches the PowerShell shell.
