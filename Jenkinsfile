@@ -9,12 +9,17 @@ pipeline {
         }
 
         stage('Nuget Restore') {
-            steps {
-               
-                nuget restore "dotnetframework48-cicd-demo.sln"
-                echo "Nuget Done Starting Msbuild *************"
-
-            }
+  
+                steps {
+                    bat label: 'Nuget Restore',
+                        script: ''
+                    '
+                    nuget restore "dotnetframework48-cicd-demo.sln"
+                    echo "Nuget Done Starting Msbuild *************"
+                    ''
+                    ' 
+                }
+      
         }
 
         stage('Build') {
