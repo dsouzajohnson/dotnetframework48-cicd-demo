@@ -1,5 +1,5 @@
 pipeline {
-  agent { label "build && windows" }
+  agent any
   stages {
     stage('Clean Workspace'){
       steps {
@@ -9,12 +9,7 @@ pipeline {
     
     stage('Checkout'){
       steps {
-        checkout([$class: 'GitSCM', 
-        branches: [[name: '*/master']], 
-        doGenerateSubmoduleConfigurations: false, 
-        extensions: [], 
-        submoduleCfg: [], 
-        userRemoteConfigs: [[url: 'https://github.com/dsouzajohnson/dotnetframework48-cicd-demo.git']]])
+        checkout scm
 
       }
     }
@@ -32,11 +27,11 @@ pipeline {
     stage('Build') {
       steps {
        script {
-					  //def msbuild = tool name: 'msbuild_2017', type: 'hudson.plugins.msbuild.MsBuildInstallation'
-					  tool name: 'msbuild_2019', type: 'msbuild'
-					  bat "\"${tool 'msbuild_2019'}\" dotnetframework48-cicd-demo.sln"
-					}
-      }
+		  //def msbuild = tool name: 'msbuild_2017', type: 'hudson.plugins.msbuild.MsBuildInstallation'
+		  tool name: 'msbuild_2019', type: 'msbuild'
+		  bat "\"${tool 'msbuild_2019'}\" dotnetframework48-cicd-demo.sln"
+		}
+      	}
     }
 
     stage('UnitTest') {
