@@ -12,13 +12,11 @@ podTemplate(label: 'dotnetframework48-cicd-demo', containers: [
         stage('Nuget Restore') {
             container('dotnetframework') {
                 steps {
-                    bat label: 'Nuget Restore',
-                        script: ''
-                    '
-                    nuget restore "dotnetframework48-cicd-demo.sln"
-                    echo "Nuget Done Starting Msbuild *************"
-                    ''
-                    ' 
+                   bat label: 'Nuget Restore', 
+                    script: '''
+                      nuget restore "dotnetframework48-cicd-demo.sln"
+                      echo "Nuget Done Starting Msbuild *************"
+                    ''' 
                 }
             }
         }
