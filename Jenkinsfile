@@ -30,24 +30,13 @@ pipeline {
 
     stage('UnitTest') {
       steps {
-        script {
-          bat label: 'Unit Test using Dotnet CLI',
-        script: '''
-          //dotnet.exe test .\\dotnetframework48-cicd-demo\\
-        '''
-        }
+        	echo 'Step Unit Test Project'
       }
     }
 
     stage('Deploy') {
       steps {
-        bat label: 'MsDeploy',
-        script: ''' 
-          // For Localhost
-          //"C:\\Program Files (x86)\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe" -verb:sync -source:package="PrimeDotnet\\bin\\Debug\\Package\\dotnetframework48-cicd-demo.zip" -dest:auto,computerName=localhost
-          // For Remote Server
-           //"C:\\Program Files (x86)\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe" -verb:sync -source:package="PrimeDotnet\\obj\\Debug\\Package\\dotnetframework48-cicd-demo.zip" -dest:auto,computerName="<IP or Hostname>",userName=administrator,password="supersecret",authType=NTLM -allowUntrusted=true
-        '''
+        echo 'Step Deploy Project'
       }
     }
   }
